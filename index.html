@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>K-뷰티 부스 기획안 | 2026 건강서울페스티벌</title>
+  <title>K-뷰티 부스 운영 기획안 | 2026 건강서울페스티벌</title>
   <meta name="description" content="2026 건강서울페스티벌 서울특별시약사회 K-뷰티 부스 기획안: 부스 배치도, 벽면 포스터, A3 Q&A 책자, 스티커 판넬, 동선·운영 계획">
   <meta name="theme-color" content="#E0457B">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23E0457B'/%3E%3Cpath d='M32 14c-7 10-12 16-12 23a12 12 0 0 0 24 0c0-7-5-13-12-23z' fill='%23fff'/%3E%3C/svg%3E">
@@ -20,8 +20,8 @@
       <a class="brand" href="#/home" aria-label="기획안 첫 페이지로">
         <span class="brand-mark" aria-hidden="true">K</span>
         <span class="brand-text">
-          <strong>K-뷰티 부스 기획안</strong>
-          <small>2026 건강서울페스티벌 · 서울특별시약사회</small>
+          <strong>K-뷰티 부스 운영 기획안</strong>
+          <small>2026 건강서울페스티벌 · 서울특별시약사회 · 초안(v2)</small>
         </span>
       </a>
       <button class="btn-share" type="button" id="btn-print">
@@ -41,24 +41,24 @@
     <section class="page" data-page="home" aria-labelledby="home-title">
       <div class="report-cover">
         <div class="container">
-          <p class="eyebrow">기획안 보고 · 서울특별시약사회</p>
-          <h1 id="home-title">2026 건강서울페스티벌<br><span>K-뷰티 부스</span> 기획안</h1>
-          <p class="cover-msg" id="cover-msg"></p>
-          <ul class="cover-meta">
-            <li>부스 3m × 3m</li><li>정면 1면 개방</li><li>체류 2~5분</li><li>일방통행 동선</li>
-          </ul>
+          <p class="eyebrow" id="cover-event"></p>
+          <h1 id="home-title"></h1>
+          <p class="cover-msg" id="cover-tagline"></p>
+          <p class="cover-info" id="cover-info"></p>
         </div>
       </div>
 
       <div class="container page-body">
+        <dl class="summary-box" id="summary-box" aria-label="기획안 요약"></dl>
+
         <h2 class="sec-title"><span>1</span>부스 배치도</h2>
-        <p class="sec-lead">정면(아래쪽)으로 입장해 좌측 벽을 따라 참여하고, 안쪽을 돌아 우측 벽을 따라 퇴장하는 구조입니다. <strong>알파벳(A~G)</strong>은 구역, <strong>분홍 숫자(1~4)</strong>는 관람객 동선 순서입니다.</p>
+        <p class="sec-lead">정면 좌측으로 입장해 좌측 벽을 따라 참여하고, 후면에서 돌아 우측 벽을 따라 퇴장하는 <strong>U자형 일방통행</strong>입니다. <strong>알파벳(A~G)</strong>은 구역, <strong>분홍 숫자(1~4)</strong>는 동선 순서입니다.</p>
 
         <div class="map-layout">
           <figure class="booth-map">
-            <svg viewBox="0 0 400 470" role="img" aria-labelledby="map-title map-desc">
+            <svg viewBox="0 0 400 480" role="img" aria-labelledby="map-title map-desc">
               <title id="map-title">K-뷰티 부스 배치도 (3m × 3m)</title>
-              <desc id="map-desc">정면 왼쪽으로 입장해 스티커 판넬(F), 좌측 벽 기념품 테이블(E)을 거쳐 중앙 차단봉(G)을 따라 안쪽으로 이동합니다. 좌측 벽 안쪽에는 짐 보관 테이블(C)과 A3 Q&amp;A 책자(D)가 있고, 뒤쪽 벽(A)·우측 벽(B) 포스터를 관람한 뒤 우측 벽을 따라 정면 오른쪽으로 퇴장합니다.</desc>
+              <desc id="map-desc">좌측 벽을 따라 정면부터 스티커 판넬(A), 기념품 테이블(B), 안쪽에 짐 보관 테이블(G)과 A3 책자(C)가 있습니다. 차단봉(F)은 좌측 벽에서 약 2.1m 지점에 약 1.5m 길이로 설치해 입장·퇴장 통로를 각 약 870mm로 나눕니다. 후면 벽에 PART 1 포스터(D), 우측 벽에 PART 2 포스터(E)가 있습니다.</desc>
               <defs>
                 <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M0 0L10 5L0 10z" fill="var(--pink-600)"/>
@@ -68,267 +68,332 @@
                   <path d="M0 0V6" stroke="var(--storage-line)" stroke-width="2"/>
                 </pattern>
               </defs>
-              <!-- 치수 -->
+              <!-- 외곽 치수 -->
               <g class="map-dim">
                 <path d="M40 16h320M40 11v10M360 11v10"/>
-                <text x="200" y="12">3m</text>
-                <path d="M384 30v320M379 30h10M379 350h10"/>
-                <text x="392" y="194" transform="rotate(90 392 194)">3m</text>
+                <text x="200" y="12">3,000</text>
+                <path d="M374 30v320M369 30h10M369 350h10"/>
+                <text x="380" y="190" transform="rotate(90 380 190)">3,000</text>
               </g>
               <rect x="40" y="30" width="320" height="320" class="map-floor"/>
+              <!-- 좌측 점유 구역(직원 500 + 테이블 730) 음영 -->
+              <rect x="40" y="30" width="131" height="320" class="map-band"/>
               <path d="M40 350V30h320v320" class="map-wall"/>
-              <!-- A 뒤쪽 벽 포스터 -->
-              <rect x="80" y="36" width="240" height="18" rx="4" class="map-poster"/>
-              <text x="208" y="49" class="map-label-sm">뒤쪽 벽 포스터 (PART 1)</text>
-              <!-- B 우측 벽 포스터 -->
-              <rect x="336" y="70" width="18" height="220" rx="4" class="map-poster"/>
-              <text x="345" y="190" class="map-label-sm" transform="rotate(90 345 190)">우측 벽 포스터 (PART 2)</text>
-              <!-- C 짐 보관 테이블 -->
-              <rect x="44" y="62" width="30" height="84" rx="5" class="map-storage"/>
-              <rect x="51" y="84" width="16" height="48" rx="3" fill="#fff" opacity=".85"/>
-              <text x="59" y="108" class="map-label-xs map-dark" transform="rotate(-90 59 108)" dy="4">짐 보관</text>
-              <!-- D A3 책자 -->
-              <rect x="80" y="70" width="58" height="68" rx="6" class="map-book"/>
-              <text x="109" y="103" class="map-label-sm">A3</text>
-              <text x="109" y="117" class="map-label-xs map-dark">Q&amp;A 책자</text>
-              <!-- E 기념품 테이블 + 직원 -->
-              <circle cx="58" cy="200" r="9" class="map-staff"/>
-              <circle cx="58" cy="262" r="9" class="map-staff"/>
-              <rect x="74" y="160" width="46" height="140" rx="6" class="map-table"/>
-              <text x="97" y="230" class="map-label-sm" transform="rotate(-90 97 234)">기념품 테이블</text>
-              <text x="57" y="292" class="map-label-xs">직원</text>
-              <!-- G 중앙 차단봉 -->
+
+              <!-- D: 후면 벽 PART 1 포스터 (1,800mm) -->
+              <rect x="104" y="34" width="192" height="16" rx="3" class="map-poster"/>
+              <text x="196" y="46" class="map-label-sm">PART 1 포스터 1,800</text>
+              <!-- E: 우측 벽 PART 2 포스터 (1,800mm) -->
+              <rect x="340" y="94" width="16" height="192" rx="3" class="map-poster"/>
+              <text x="348" y="200" class="map-label-sm" transform="rotate(90 348 200)">PART 2 포스터 1,800</text>
+
+              <!-- G: 짐 보관 테이블 (벽 쪽) + C: A3 책자 (통로 쪽) : 안쪽 500mm 구간 -->
+              <rect x="44" y="54" width="46" height="36" rx="4" class="map-storage"/>
+              <rect x="49" y="64" width="36" height="16" rx="3" fill="#fff" opacity=".9"/>
+              <text x="67" y="76" class="map-label-xs map-dark">짐 보관</text>
+              <rect x="96" y="56" width="70" height="32" rx="5" class="map-book"/>
+              <text x="124" y="76" class="map-label-xs map-dark">A3 책자</text>
+
+              <!-- B: 기념품 테이블 1,830 × 730 + 직원 2 -->
+              <rect x="93" y="93" width="78" height="192" rx="4" class="map-table"/>
+              <text x="132" y="186" class="map-label-sm" transform="rotate(-90 132 190)">기념품 테이블 1,830</text>
+              <circle cx="66" cy="150" r="9" class="map-staff"/>
+              <circle cx="66" cy="230" r="9" class="map-staff"/>
+              <text x="66" y="262" class="map-label-xs">직원 2</text>
+
+              <!-- A: 스티커 판넬 (600 구간) -->
+              <rect x="50" y="300" width="112" height="34" rx="4" class="map-sticker"/>
+              <text x="106" y="321" class="map-label-sm">스티커 판넬</text>
+
+              <!-- F: 차단봉 (좌측 벽에서 2,100, 길이 1,500) -->
               <g class="map-stanchion">
-                <path d="M226 130V330"/>
-                <circle cx="226" cy="130" r="5"/><circle cx="226" cy="230" r="5"/><circle cx="226" cy="330" r="5"/>
+                <path d="M264 115V275"/>
+                <circle cx="264" cy="115" r="5"/><circle cx="264" cy="195" r="5"/><circle cx="264" cy="275" r="5"/>
               </g>
-              <text x="236" y="236" class="map-label-xs map-left">차단봉</text>
-              <!-- F 스티커 판넬 -->
-              <rect x="70" y="318" width="70" height="22" rx="4" class="map-sticker"/>
-              <text x="105" y="333" class="map-label-sm">스티커 판넬</text>
+              <text x="264" y="292" class="map-label-xs map-dark">차단봉 1.5m</text>
+
+              <!-- 상주 약사 (회차 공간) -->
+              <g class="map-pharm"><circle cx="290" cy="124" r="10"/><text x="290" y="128">약</text></g>
+
               <!-- 동선 -->
-              <path class="map-path" d="M172 440V392Q172 360 146 352 M146 352Q172 330 152 300V150Q152 96 210 84 M210 84Q300 76 312 120V330 M312 330V440" marker-end="url(#arrow)"/>
-              <g class="map-num"><circle cx="156" cy="370" r="11"/><text x="156" y="374">1</text></g>
-              <g class="map-num"><circle cx="152" cy="236" r="11"/><text x="152" y="240">2</text></g>
-              <g class="map-num"><circle cx="250" cy="80" r="11"/><text x="250" y="84">3</text></g>
-              <g class="map-num"><circle cx="312" cy="236" r="11"/><text x="312" y="240">4</text></g>
+              <path class="map-path" d="M217 446V350Q217 326 168 320 M168 320Q212 312 212 282V112Q212 70 256 68 M256 68Q316 68 316 120V446" marker-end="url(#arrow)"/>
+              <g class="map-num"><circle cx="190" cy="340" r="11"/><text x="190" y="344">1</text></g>
+              <g class="map-num"><circle cx="212" cy="190" r="11"/><text x="212" y="194">2</text></g>
+              <g class="map-num"><circle cx="236" cy="70" r="11"/><text x="236" y="74">3</text></g>
+              <g class="map-num"><circle cx="316" cy="190" r="11"/><text x="316" y="194">4</text></g>
+
               <!-- 구역 기호 A~G -->
-              <g class="map-code"><rect x="84" y="37" width="16" height="16" rx="4"/><text x="92" y="49">A</text></g>
-              <g class="map-code"><rect x="337" y="74" width="16" height="16" rx="4"/><text x="345" y="86">B</text></g>
-              <g class="map-code"><rect x="51" y="64" width="16" height="16" rx="4"/><text x="59" y="76">C</text></g>
-              <g class="map-code"><rect x="118" y="73" width="16" height="16" rx="4"/><text x="126" y="85">D</text></g>
-              <g class="map-code"><rect x="100" y="164" width="16" height="16" rx="4"/><text x="108" y="176">E</text></g>
-              <g class="map-code"><rect x="48" y="321" width="16" height="16" rx="4"/><text x="56" y="333">F</text></g>
-              <g class="map-code"><rect x="234" y="122" width="16" height="16" rx="4"/><text x="242" y="134">G</text></g>
+              <g class="map-code"><rect x="42" y="283" width="16" height="16" rx="4"/><text x="50" y="295">A</text></g>
+              <g class="map-code"><rect x="153" y="96" width="16" height="16" rx="4"/><text x="161" y="108">B</text></g>
+              <g class="map-code"><rect x="148" y="64" width="16" height="16" rx="4"/><text x="156" y="76">C</text></g>
+              <g class="map-code"><rect x="298" y="34" width="16" height="16" rx="4"/><text x="306" y="46">D</text></g>
+              <g class="map-code"><rect x="322" y="96" width="16" height="16" rx="4"/><text x="330" y="108">E</text></g>
+              <g class="map-code"><rect x="248" y="100" width="16" height="16" rx="4"/><text x="256" y="112">F</text></g>
+              <g class="map-code"><rect x="44" y="36" width="16" height="16" rx="4"/><text x="52" y="48">G</text></g>
+
+              <!-- 폭 치수 (정면 기준) -->
+              <g class="map-dim">
+                <path d="M40 458h320M40 453v10M171 453v10M264 453v10M360 453v10"/>
+                <text x="105" y="475">좌측 1,230</text>
+                <text x="217" y="475">입장 870</text>
+                <text x="312" y="475">퇴장 870</text>
+              </g>
               <!-- 입구/출구 -->
-              <rect x="136" y="410" width="72" height="28" rx="14" class="map-in"/>
-              <text x="172" y="429" class="map-gate">입구</text>
-              <rect x="276" y="410" width="72" height="28" rx="14" class="map-out"/>
-              <text x="312" y="429" class="map-gate">출구</text>
-              <text x="200" y="464" class="map-label-xs">▲ 정면 (개방) ▲</text>
+              <rect x="181" y="416" width="72" height="26" rx="13" class="map-in"/>
+              <text x="217" y="434" class="map-gate">입구</text>
+              <rect x="280" y="416" width="72" height="26" rx="13" class="map-out"/>
+              <text x="316" y="434" class="map-gate">출구</text>
+              <rect x="92" y="418" width="70" height="22" rx="11" class="map-guide"/>
+              <text x="127" y="433" class="map-label-xs map-dark">입구 안내</text>
+              <text x="110" y="400" class="map-label-xs">▲ 정면 (개방) ▲</text>
             </svg>
-            <figcaption>부스 배치 개략도 · 3m × 3m (실측 비율 아님, 현장 사정에 따라 조정)</figcaption>
+            <figcaption>부스 배치 개략도 (단위 mm) · 치수는 표준 규격 기준 가정값 (주최 측 도면 수령 후 확정)</figcaption>
           </figure>
 
           <div class="map-side">
-            <h3 class="mini-title">구역 설명 <small>누르면 상세 기획으로 이동</small></h3>
+            <h3 class="mini-title">구역 구성 <small>누르면 상세 기획으로 이동</small></h3>
             <ul class="zone-list" id="zone-list"></ul>
             <h3 class="mini-title">관람 동선</h3>
             <ol class="flow-steps" id="flow-steps"></ol>
           </div>
         </div>
 
-        <h2 class="sec-title"><span>2</span>사업 개요</h2>
-        <div class="two-col">
-          <dl class="spec-table" id="overview-facts"></dl>
-          <div class="box">
-            <h3 class="mini-title">기획 목적</h3>
-            <p class="box-lead">단순 화장품 홍보가 아니라, 시민이 K-뷰티를 똑똑하게 이해하고 약사와 대화하도록 돕는 부스</p>
-            <ol class="num-list" id="overview-purpose"></ol>
-          </div>
-        </div>
+        <h2 class="sec-title"><span>2</span>추진 배경</h2>
+        <ul class="gov-list box" id="background"></ul>
 
-        <h2 class="sec-title"><span>3</span>핵심 메시지 · 콘셉트</h2>
+        <h2 class="sec-title"><span>3</span>운영 개요</h2>
+        <dl class="spec-table" id="overview-table"></dl>
         <blockquote class="key-message"><p id="key-message"></p></blockquote>
-        <ul class="chip-row" id="sub-messages"></ul>
-        <ul class="concept-grid" id="concept-list"></ul>
-        <div class="box box-soft">
-          <h3 class="mini-title">디자인·톤 방향</h3>
-          <ul class="dot-list" id="tone-list"></ul>
-        </div>
 
-        <h2 class="sec-title"><span>4</span>세부 기획 목차</h2>
+        <h2 class="sec-title"><span>4</span>운영 목표 및 측정 지표</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">지표</th><th scope="col">목표</th><th scope="col">측정 방법</th></tr></thead>
+            <tbody id="kpi-table"></tbody>
+          </table>
+        </div>
+        <p class="fine-print" id="capacity-note"></p>
+
+        <h2 class="sec-title"><span>5</span>세부 기획 목차</h2>
         <ul class="menu-grid" id="home-menu"></ul>
       </div>
     </section>
 
     <!-- =====================================================================
-         02. 벽면 포스터
+         02. 공간 구성 · 치수 검토
          ===================================================================== -->
-    <section class="page" data-page="poster" aria-labelledby="poster-title" hidden>
+    <section class="page" data-page="space" aria-labelledby="space-title" hidden>
       <div class="page-head"><div class="container">
-        <p class="section-kicker">02 · WALL POSTER</p>
-        <h1 id="poster-title">벽면 포스터 기획</h1>
-        <p class="section-lead">뒤쪽 벽(A)에 PART 1, 우측 벽(B)에 PART 2 질문 포스터를 각각 4장씩, 눈높이에 2×2로 배치합니다.</p>
+        <p class="section-kicker">02 · SPACE</p>
+        <h1 id="space-title">공간 구성 · 치수 검토</h1>
+        <p class="section-lead">도면 보완 사항과 구역별 설치물 규격입니다.</p>
       </div></div>
       <div class="container page-body">
-        <div class="box">
-          <h3 class="mini-title">배치 원칙</h3>
-          <ul class="dot-list" id="poster-principles"></ul>
+        <h2 class="sec-title"><span>1</span>치수 검토 (도면 보완 사항)</h2>
+        <ul class="gov-list box" id="space-checks"></ul>
+
+        <h3 class="mini-title">부스 폭 3,000mm 배분 (정면에서 본 가로 방향)</h3>
+        <div class="bar-chart" id="width-bar"></div>
+        <h3 class="mini-title">좌측 벽 길이 배분 (정면 → 후면)</h3>
+        <div class="bar-chart" id="leftwall-bar"></div>
+        <p class="fine-print" id="leftwall-note"></p>
+
+        <h2 class="sec-title"><span>2</span>구역별 구성</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">구역</th><th scope="col">위치</th><th scope="col">설치물·규격</th><th scope="col">운영</th></tr></thead>
+            <tbody id="zone-table"></tbody>
+          </table>
         </div>
-        <div id="wall-list"></div>
-        <p class="fine-print">※ 위 ‘시각 요소’는 디자인 제안입니다. 순위·수출액 등 수치는 인쇄 전 최신 자료로 재검증 후에만 넣습니다.</p>
+        <ul class="note-list" id="space-notes"></ul>
       </div>
     </section>
 
     <!-- =====================================================================
-         03. A3 책자
+         03. 벽면 포스터
+         ===================================================================== -->
+    <section class="page" data-page="poster" aria-labelledby="poster-title" hidden>
+      <div class="page-head"><div class="container">
+        <p class="section-kicker">03 · WALL POSTER</p>
+        <h1 id="poster-title">벽면 포스터 (8문항)</h1>
+        <p class="section-lead">후면 벽(D)에 PART 1, 우측 벽(E)에 PART 2 — 벽마다 1,800 × 1,200mm 실사출력 1장에 4문항을 담습니다.</p>
+      </div></div>
+      <div class="container page-body">
+        <ul class="gov-list box" id="poster-principles"></ul>
+        <div id="wall-list"></div>
+        <p class="fine-print">※ ‘시각 요소’는 디자인 참고용 제안입니다. 문구는 한 줄 답(기준안)을 따릅니다.</p>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         04. A3 책자
          ===================================================================== -->
     <section class="page" data-page="booklet" aria-labelledby="booklet-title" hidden>
       <div class="page-head"><div class="container">
-        <p class="section-kicker">03 · A3 Q&amp;A BOOKLET</p>
-        <h1 id="booklet-title">A3 Q&amp;A 책자 기획</h1>
-        <p class="section-lead">좌측 벽 위쪽(D)에 두는 넘겨보는 플립북입니다. 포스터보다 한 단계 자세하게, 질문 8개를 한 장씩 설명합니다.</p>
+        <p class="section-kicker">04 · A3 Q&amp;A BOOKLET</p>
+        <h1 id="booklet-title">A3 Q&amp;A 책자</h1>
+        <p class="section-lead">좌측 벽 안쪽(C)에 탁상형 북스탠드로 세워 두고, 서서 넘겨보는 10면 플립북입니다.</p>
       </div></div>
       <div class="container page-body">
         <div class="two-col">
-          <div>
-            <h3 class="mini-title">사양</h3>
-            <dl class="spec-table" id="booklet-specs"></dl>
-          </div>
-          <div class="box">
-            <h3 class="mini-title">왜 ‘서서 넘겨보는’ 탁상형인가</h3>
-            <ul class="dot-list" id="booklet-why"></ul>
-          </div>
+          <dl class="spec-table" id="booklet-specs"></dl>
+          <figure class="page-mock" aria-label="면 구성 예시 (A3 가로)">
+            <div class="page-mock-inner" id="booklet-layout"></div>
+            <figcaption>면 구성 (A3 가로) — 상단 20% · 중단 60% · 하단 20%</figcaption>
+          </figure>
         </div>
 
-        <h2 class="sec-title"><span>1</span>포스터 · 책자 · 홈페이지 역할 구분</h2>
+        <h2 class="sec-title"><span>1</span>매체별 역할</h2>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th scope="col">매체</th><th scope="col">위치</th><th scope="col">보는 시간</th><th scope="col">역할</th></tr></thead>
+            <thead><tr><th scope="col">매체</th><th scope="col">위치</th><th scope="col">보는 시간</th><th scope="col">담는 내용</th></tr></thead>
             <tbody id="media-roles"></tbody>
           </table>
         </div>
 
-        <h2 class="sec-title"><span>2</span>페이지 구성 (총 <em id="booklet-count"></em>면)</h2>
+        <h2 class="sec-title"><span>2</span>면별 구성 · 약사 TIP (총 <em id="booklet-count"></em>면)</h2>
         <div class="faq-actions">
           <button type="button" class="text-btn" data-expand="#booklet-pages">모두 펼치기</button>
           <button type="button" class="text-btn" data-collapse="#booklet-pages">모두 접기</button>
         </div>
         <ol class="booklet-pages" id="booklet-pages"></ol>
+        <p class="review-note" id="review-note-1"></p>
       </div>
     </section>
 
     <!-- =====================================================================
-         04. 스티커 · 기념품 · 짐 보관
+         05. 운영 계획
          ===================================================================== -->
-    <section class="page" data-page="sticker" aria-labelledby="sticker-title" hidden>
+    <section class="page" data-page="operation" aria-labelledby="operation-title" hidden>
       <div class="page-head"><div class="container">
-        <p class="section-kicker">04 · STICKER · SOUVENIR · STORAGE</p>
-        <h1 id="sticker-title">스티커 판넬 · 기념품 · 짐 보관</h1>
-        <p class="section-lead">입구의 참여 활동(F)에서 기념품 수령(E)까지, 그리고 직원 짐 보관(C) 계획입니다.</p>
+        <p class="section-kicker">05 · OPERATION</p>
+        <h1 id="operation-title">운영 계획</h1>
+        <p class="section-lead">스티커 참여 → 기념품 수령 → 관람, 그리고 짐 보관·인력·혼잡 대응 기준입니다.</p>
       </div></div>
       <div class="container page-body">
-        <h2 class="sec-title"><span>F</span>스티커 판넬</h2>
+        <h2 class="sec-title"><span>1</span>피부 고민 스티커 참여 <small class="zone-tag">A</small></h2>
         <div class="two-col">
           <div class="panel-mock" aria-label="스티커 판넬 시안">
             <p class="panel-title" id="panel-title"></p>
             <ul id="panel-rows"></ul>
-            <p class="panel-foot">가장 신경 쓰이는 고민 1개에 스티커를 붙여 주세요</p>
+            <p class="panel-foot">A1 폼보드 · 13mm 원형 스티커</p>
           </div>
-          <div>
-            <h3 class="mini-title">참여 방식</h3>
-            <ol class="num-list" id="panel-howto"></ol>
-            <h3 class="mini-title">운영 메모</h3>
-            <ul class="dot-list" id="panel-notes"></ul>
-          </div>
+          <ul class="gov-list box" id="sticker-rules"></ul>
         </div>
 
-        <h2 class="sec-title"><span>E</span>기념품 수령 테이블</h2>
-        <dl class="spec-table" id="souvenir-specs"></dl>
+        <h2 class="sec-title"><span>2</span>기념품 수령 <small class="zone-tag">B</small></h2>
+        <ul class="gov-list box" id="souvenir-list"></ul>
 
-        <h2 class="sec-title"><span>C</span>짐 보관 테이블 (신규)</h2>
+        <h2 class="sec-title"><span>3</span>짐 보관 테이블 <small class="zone-tag">G</small></h2>
         <div class="two-col">
           <figure class="storage-fig">
             <svg viewBox="0 0 320 190" role="img" aria-labelledby="st-title">
-              <title id="st-title">짐 보관 테이블 측면 개념도: 상판 아래를 테이블보로 가리고 리빙박스와 가방을 보관</title>
+              <title id="st-title">짐 보관 테이블 측면 개념도: 좌측 벽에 붙인 소형 테이블 하부를 테이블 스커트로 가리고, 통로 쪽에 A3 책자 거치대</title>
               <rect x="10" y="10" width="14" height="170" class="st-wall"/>
               <text x="17" y="100" class="st-label st-on-dark" transform="rotate(-90 17 100)" dy="4">좌측 벽</text>
-              <rect x="30" y="40" width="200" height="12" rx="3" class="st-top"/>
-              <path d="M30 52h200v126H30z" class="st-cloth"/>
-              <rect x="44" y="118" width="80" height="58" rx="6" class="st-box"/>
-              <text x="84" y="151" class="st-label">리빙박스</text>
-              <rect x="136" y="128" width="54" height="48" rx="8" class="st-box"/>
-              <text x="163" y="156" class="st-label">가방</text>
-              <text x="130" y="32" class="st-label">상판: 여분 쿠폰·기념품 임시 보관</text>
-              <text x="130" y="86" class="st-label st-muted">테이블보(바닥 가까이까지)</text>
-              <rect x="244" y="28" width="60" height="70" rx="6" class="st-book"/>
-              <text x="274" y="60" class="st-label">A3</text>
-              <text x="274" y="76" class="st-label">책자</text>
-              <path d="M236 180h80" class="st-floor"/><path d="M24 180h212" class="st-floor"/>
+              <rect x="30" y="60" width="130" height="10" rx="3" class="st-top"/>
+              <path d="M30 70h130v108H30z" class="st-cloth"/>
+              <rect x="44" y="124" width="72" height="52" rx="6" class="st-box"/>
+              <text x="80" y="154" class="st-label">직원 짐</text>
+              <text x="95" y="52" class="st-label">짐 보관 테이블</text>
+              <text x="95" y="100" class="st-label st-muted">테이블 스커트</text>
+              <rect x="178" y="84" width="120" height="10" rx="3" class="st-top st-top-book"/>
+              <path d="M186 94v84M290 94v84" class="st-floor"/>
+              <path d="M200 84l30-44h40l-10 44" class="st-book"/>
+              <text x="238" y="66" class="st-label">A3 책자</text>
+              <text x="238" y="118" class="st-label st-muted">거치대 (통로 쪽)</text>
+              <path d="M24 180h290" class="st-floor"/>
             </svg>
-            <figcaption>측면 개념도 · 좌측 벽 → 짐 보관 테이블 → A3 책자</figcaption>
+            <figcaption>측면 개념도 · 좌측 벽 → 짐 보관 테이블 → A3 책자 거치대 → 입장 통로</figcaption>
           </figure>
           <dl class="spec-table" id="storage-specs"></dl>
         </div>
+
+        <h2 class="sec-title"><span>4</span>인력 배치 <small class="zone-tag" id="staff-total"></small></h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">역할</th><th scope="col">인원</th><th scope="col">위치</th><th scope="col">주요 업무</th></tr></thead>
+            <tbody id="staff-table"></tbody>
+          </table>
+        </div>
+        <ul class="note-list" id="staff-notes"></ul>
+
+        <h2 class="sec-title"><span>5</span>혼잡 대응 기준</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">상황</th><th scope="col">조치</th></tr></thead>
+            <tbody id="crowd-table"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
     <!-- =====================================================================
-         05. 동선 · 운영 · 준비물
+         06. 제작물 및 소요 물품
          ===================================================================== -->
-    <section class="page" data-page="operation" aria-labelledby="operation-title" hidden>
+    <section class="page" data-page="supplies" aria-labelledby="supplies-title" hidden>
       <div class="page-head"><div class="container">
-        <p class="section-kicker">05 · FLOW · OPERATION</p>
-        <h1 id="operation-title">동선 · 운영 · 준비물</h1>
-        <p class="section-lead">관람객이 매우 많을 것으로 예상되어, 회전율과 안전을 최우선으로 설계했습니다.</p>
+        <p class="section-kicker">06 · SUPPLIES</p>
+        <h1 id="supplies-title">제작물 및 소요 물품</h1>
+        <p class="section-lead">제작·구매·대여·주최 측 제공 구분입니다.</p>
       </div></div>
       <div class="container page-body">
-        <h2 class="sec-title"><span>1</span>관람객 참여 순서</h2>
-        <ol class="stepper" id="step-list"></ol>
-
-        <h2 class="sec-title"><span>2</span>동선 원칙</h2>
-        <ul class="dot-list box" id="flow-rules"></ul>
-
-        <h2 class="sec-title"><span>3</span>현장 안내 문구(안)</h2>
-        <ul class="tip-list" id="booth-tips"></ul>
-
-        <h2 class="sec-title"><span>4</span>저비용 연출물 · 준비물</h2>
-        <div class="two-col">
-          <div>
-            <h3 class="mini-title ok">추천</h3>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th scope="col">물품</th><th scope="col">목적</th></tr></thead><tbody id="props-ok"></tbody></table></div>
-          </div>
-          <div>
-            <h3 class="mini-title ng">비추천</h3>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th scope="col">물품</th><th scope="col">이유</th></tr></thead><tbody id="props-ng"></tbody></table></div>
-          </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">품목</th><th scope="col">규격</th><th scope="col">수량</th><th scope="col">조달</th><th scope="col">비고</th></tr></thead>
+            <tbody id="supplies-table"></tbody>
+          </table>
         </div>
-
-        <h2 class="sec-title"><span>5</span>콘텐츠 표현 원칙</h2>
-        <ul class="caution-list" id="caution-list"></ul>
+        <ul class="note-list" id="supplies-notes"></ul>
       </div>
     </section>
 
     <!-- =====================================================================
-         06. Q&A 원고
+         07. 추진 일정 · 확인 필요 사항
+         ===================================================================== -->
+    <section class="page" data-page="schedule" aria-labelledby="schedule-title" hidden>
+      <div class="page-head"><div class="container">
+        <p class="section-kicker">07 · SCHEDULE</p>
+        <h1 id="schedule-title">추진 일정 · 확인 필요 사항</h1>
+      </div></div>
+      <div class="container page-body">
+        <h2 class="sec-title"><span>1</span>추진 일정</h2>
+        <ol class="timeline" id="schedule-list"></ol>
+
+        <h2 class="sec-title"><span>2</span>확인 필요 사항</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th scope="col">항목</th><th scope="col">확인처</th><th scope="col">영향</th></tr></thead>
+            <tbody id="checks-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         08. Q&A 원고
          ===================================================================== -->
     <section class="page" data-page="faq" aria-labelledby="faq-title" hidden>
       <div class="page-head"><div class="container">
-        <p class="section-kicker">06 · Q&amp;A SCRIPT</p>
-        <h1 id="faq-title">K-뷰티 Q&amp;A 8가지 원고</h1>
-        <p class="section-lead">포스터(한 줄 답)와 A3 책자(상세)에 공통으로 쓰는 원고입니다. 질문을 누르면 펼쳐집니다.</p>
+        <p class="section-kicker">08 · Q&amp;A SCRIPT</p>
+        <h1 id="faq-title">Q&amp;A 8문항 원고</h1>
+        <p class="section-lead">포스터(한 줄 답)와 A3 책자(핵심 + 약사 TIP)에 공통으로 쓰는 원고입니다. 질문을 누르면 펼쳐집니다.</p>
       </div></div>
       <div class="container page-body">
+        <div class="box box-warn">
+          <p class="review-note" id="review-note-2"></p>
+          <h3 class="mini-title">표현 원칙</h3>
+          <ul class="dot-list" id="caution-list"></ul>
+        </div>
         <div class="faq-tools">
           <div class="search">
             <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
-            <label class="sr-only" for="faq-search">Q&amp;A 검색</label>
+            <label class="sr-only" for="faq-search">원고 검색</label>
             <input id="faq-search" type="search" placeholder="원고 검색 (예: 선크림, 시카, 약국)" autocomplete="off">
           </div>
-          <div class="tabs" role="tablist" aria-label="Q&amp;A 파트 선택">
+          <div class="tabs" role="tablist" aria-label="PART 선택">
             <button role="tab" type="button" class="tab" data-part="all" aria-selected="true">전체</button>
-            <button role="tab" type="button" class="tab" data-part="1" aria-selected="false">PART 1 · 뒤쪽 벽</button>
+            <button role="tab" type="button" class="tab" data-part="1" aria-selected="false">PART 1 · 후면 벽</button>
             <button role="tab" type="button" class="tab" data-part="2" aria-selected="false">PART 2 · 우측 벽</button>
           </div>
         </div>
@@ -431,6 +496,7 @@
 
   <!-- ============ 아이콘 스프라이트 ============ -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></g></symbol>
     <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></g></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></symbol>
     <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/></g></symbol>

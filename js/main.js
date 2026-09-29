@@ -40,82 +40,112 @@
       icon("arrow", "menu-arrow") + "</a></li>";
   });
 
+  function gov(items) {
+    return list(items, function (it) { return '<li class="lv' + it.lv + '">' + esc(it.text) + "</li>"; });
+  }
+  function rows(arr, keys, firstIsHeader) {
+    return list(arr, function (r) {
+      return "<tr>" + keys.map(function (k, i) {
+        return i === 0 && firstIsHeader ? '<th scope="row">' + esc(r[k]) + "</th>" : "<td>" + esc(r[k]) + "</td>";
+      }).join("") + "</tr>";
+    });
+  }
+  function bar(items) {
+    var total = items.reduce(function (s, x) { return s + x.mm; }, 0);
+    return list(items, function (x) {
+      return '<div class="bar-seg z-' + x.color + '" style="flex:' + x.mm + '"><strong>' + x.mm.toLocaleString() + "</strong><span>" + esc(x.name) + "</span></div>";
+    }) + '<span class="sr-only">합계 ' + total + "mm</span>";
+  }
+
   /* ======================================================================
      01. 개요 · 배치도
      ====================================================================== */
-  var O = C.overview;
-  $("#cover-msg").textContent = O.message;
+  var M = C.meta;
+  $("#cover-event").textContent = M.event;
+  $("#home-title").textContent = M.title;
+  $("#cover-tagline").textContent = M.tagline;
+  $("#cover-info").textContent = M.info;
+  $("#summary-box").innerHTML = specs(C.summary);
   $("#zone-list").innerHTML = list(C.boothZones, function (z) {
     return '<li><a href="#/' + z.page + '"><span class="zone-code">' + esc(z.code) + '</span>' +
       '<span class="zone-swatch z-' + esc(z.color) + '" aria-hidden="true"></span>' +
-      "<span><strong>" + esc(z.title) + "</strong><small>" + esc(z.desc) + "</small></span></a></li>";
+      "<span><strong>" + esc(z.title) + " <em>· " + esc(z.loc) + "</em></strong><small>" + esc(z.spec) + "</small></span></a></li>";
   });
   $("#flow-steps").innerHTML = list(C.steps, function (s) { return "<li><strong>" + esc(s.title) + "</strong></li>"; });
-  $("#overview-facts").innerHTML = specs(O.facts);
-  $("#overview-purpose").innerHTML = list(O.purpose, li);
-  $("#key-message").textContent = O.message;
-  $("#sub-messages").innerHTML = list(O.subMessages, li);
-  $("#concept-list").innerHTML = list(O.concept, function (c) {
-    return '<li><strong lang="en">' + esc(c.title) + "</strong><span>" + esc(c.desc) + "</span></li>";
-  });
-  $("#tone-list").innerHTML = list(O.tone, li);
+  $("#background").innerHTML = gov(C.background);
+  $("#overview-table").innerHTML = specs(C.overview);
+  $("#key-message").textContent = C.message;
+  $("#kpi-table").innerHTML = rows(C.kpis, ["metric", "target", "method"], true);
+  $("#capacity-note").textContent = "※ " + C.capacityNote;
 
   /* ======================================================================
-     02. 벽면 포스터
+     02. 공간 · 치수
      ====================================================================== */
-  $("#poster-principles").innerHTML = list(C.poster.principles, li);
+  $("#space-checks").innerHTML = gov(C.space.checks);
+  $("#width-bar").innerHTML = bar(C.space.widths);
+  $("#leftwall-bar").innerHTML = bar(C.space.leftWall);
+  $("#leftwall-note").textContent = "※ " + C.space.leftWallNote;
+  $("#zone-table").innerHTML = list(C.boothZones, function (z) {
+    return '<tr><th scope="row"><span class="zone-code">' + esc(z.code) + "</span> " + esc(z.title) + "</th><td>" + esc(z.loc) + "</td><td>" + esc(z.spec) + "</td><td>" + esc(z.op) + "</td></tr>";
+  });
+  $("#space-notes").innerHTML = list(C.space.notes, li);
+
+  /* ======================================================================
+     03. 벽면 포스터
+     ====================================================================== */
+  $("#poster-principles").innerHTML = gov(C.poster.principles);
   $("#wall-list").innerHTML = list(C.poster.walls, function (w) {
     var part = C.parts[w.part];
     var items = C.faq.filter(function (f) { return f.part === w.part; });
     return '<section class="wall-block">' +
-      '<h2 class="sec-title"><span>' + esc(w.code) + "</span>" + esc(w.wall) + " — " + esc(part.label) + "</h2>" +
+      '<h2 class="sec-title"><span>' + esc(w.code) + "</span>" + esc(w.wall) + " — " + esc(part.label) + ' <small class="zone-tag">' + esc(w.size) + "</small></h2>" +
       '<p class="sec-lead">' + esc(w.note) + "</p>" +
-      '<div class="wall-mock" aria-label="' + esc(w.wall) + ' 정면 구성안">' +
-      '<div class="wall-zone-label" aria-hidden="true"><span>상단 · PART 제목</span><span>눈높이 · 질문 포스터 2×2</span><span>하단 · 비움</span></div>' +
+      '<div class="wall-mock" aria-label="' + esc(w.wall) + ' 포스터 구성안">' +
+      '<div class="wall-zone-label" aria-hidden="true"><span>2,100mm</span><span>눈높이 1,500</span><span>900mm</span></div>' +
       '<div class="wall-inner">' +
       '<div class="wall-band"><small>' + esc(part.label) + "</small><strong>" + esc(part.title) + "</strong></div>" +
       '<ol class="wall-grid">' + list(items, function (f) {
         return '<li class="poster-card">' +
           '<span class="poster-no">' + f.id.toUpperCase() + "</span>" +
           '<h3 class="poster-q">' + esc(f.q) + "</h3>" +
-          '<p class="poster-a">' + esc(f.summary) + "</p>" +
+          '<p class="poster-a">' + esc(f.poster) + "</p>" +
           '<ul class="chips">' + list(f.chips.slice(0, 4), li) + "</ul>" +
           '<p class="poster-visual"><strong>시각 요소</strong> ' + esc(C.visuals[f.id] || "") + "</p>" +
-          '<a class="poster-link" href="#/faq/' + f.id + '">원고 전문 보기 →</a>' +
           "</li>";
-      }) + "</ol>" +
-      '<div class="wall-empty">하단 비움 — 바닥 가까운 곳에는 정보성 콘텐츠를 두지 않음</div>' +
-      "</div></div></section>";
+      }) + "</ol></div></div>" +
+      '<div class="wall-empty">' + esc(C.poster.install) + "</div>" +
+      "</section>";
   });
 
   /* ======================================================================
-     03. A3 책자
+     04. A3 책자
      ====================================================================== */
   var B = C.booklet;
   $("#booklet-specs").innerHTML = specs(B.specs);
-  $("#booklet-why").innerHTML = list(B.why, li);
-  $("#media-roles").innerHTML = list(C.mediaRoles, function (m) {
-    return '<tr><th scope="row">' + esc(m.name) + "</th><td>" + esc(m.where) + "</td><td>" + esc(m.time) + "</td><td>" + esc(m.role) + "</td></tr>";
+  $("#booklet-layout").innerHTML = list(B.layout, function (l, i) {
+    return '<div class="pm-row pm' + i + '" style="flex:' + l.pct + '"><strong>' + l.pct + "%</strong> " + esc(l.name) + "</div>";
   });
+  $("#media-roles").innerHTML = rows(C.mediaRoles, ["name", "where", "time", "role"], true);
   $("#booklet-count").textContent = B.pages.length;
   $("#booklet-pages").innerHTML = list(B.pages, function (p) {
     var f = p.q && faqById(p.q);
-    var badge = /^\d+$/.test(p.no) ? "P." + p.no : p.no;
+    var badge = /^\d+$/.test(p.no) ? "P." + (Number(p.no) + 1) : p.no;
     if (f) {
       return '<li><details class="bk-page">' +
         '<summary><span class="bk-no">' + esc(badge) + '</span><span class="bk-head"><strong>' + f.id.toUpperCase() + ". " + esc(f.q) + "</strong>" +
-        "<small>" + esc(C.parts[f.part].label) + " · 한 줄 답: " + esc(f.summary) + "</small></span>" + icon("chevron", "gloss-chev") + "</summary>" +
+        "<small>" + esc(f.poster) + "</small></span>" + icon("chevron", "gloss-chev") + "</summary>" +
         '<div class="bk-body">' +
-        '<p class="faq-lead">' + esc(f.lead) + "</p>" +
-        '<h4>본문 포인트</h4><ul class="faq-points">' + list(f.points, li) + "</ul>" +
-        (f.note ? '<p class="faq-note"><strong>참고</strong> ' + esc(f.note) + "</p>" : "") +
-        '<p class="poster-visual"><strong>시각 요소</strong> ' + esc(C.visuals[f.id] || "") + "</p>" +
+        '<p class="bk-sec"><em>상단 20%</em> 질문 · 한 줄 답</p><p class="faq-lead">' + esc(f.poster) + "</p>" +
+        '<p class="bk-sec"><em>중단 60%</em> 핵심 + 도식</p><ul class="faq-points">' + list(f.points, li) + "</ul>" +
+        '<p class="poster-visual"><strong>도식</strong> ' + esc(C.visuals[f.id] || "") + "</p>" +
+        '<p class="bk-sec"><em>하단 20%</em> 약사 TIP</p><p class="pharm-tip">' + icon("pharmacy") + "<span>" + esc(f.tip) + "</span></p>" +
         "</div></details></li>";
     }
     return '<li><details class="bk-page">' +
       '<summary><span class="bk-no bk-no-alt">' + esc(badge) + '</span><span class="bk-head"><strong>' + esc(p.title) + "</strong><small>" + esc(p.body[0]) + "</small></span>" + icon("chevron", "gloss-chev") + "</summary>" +
       '<div class="bk-body"><ul class="faq-points">' + list(p.body, li) + "</ul></div></details></li>";
   });
+  $("#review-note-1").textContent = "※ " + C.reviewNote;
 
   $$("[data-expand]").forEach(function (b) {
     b.addEventListener("click", function () { $$("details", $(b.getAttribute("data-expand"))).forEach(function (d) { d.open = true; }); });
@@ -125,33 +155,36 @@
   });
 
   /* ======================================================================
-     04. 스티커 · 기념품 · 짐 보관
+     05. 운영 계획
      ====================================================================== */
-  var S = C.stickerPanel;
-  $("#panel-title").innerHTML = esc(S.title) + '<small>(대안: ' + esc(S.altTitle) + ")</small>";
+  var colorName = { yellow: "노랑", blue: "파랑", red: "빨강", green: "초록", purple: "보라" };
+  $("#panel-title").textContent = C.sticker.title;
   $("#panel-rows").innerHTML = list(C.concerns, function (c, i) {
     return '<li class="c-' + c.color + '"><span class="panel-label">' + esc(c.label) + "</span>" +
-      '<span class="panel-dots" aria-hidden="true">' + new Array(4 + (i % 2)).join('<i></i>') + "</span></li>";
+      '<span class="panel-dots" aria-hidden="true">' + new Array(4 + (i % 2)).join("<i></i>") + "</span>" +
+      '<span class="panel-color">' + esc(colorName[c.color] || c.color) + "</span></li>";
   });
-  $("#panel-howto").innerHTML = list(S.howto, li);
-  $("#panel-notes").innerHTML = list(S.notes, li);
-  $("#souvenir-specs").innerHTML = specs(C.souvenir);
+  $("#sticker-rules").innerHTML = gov(C.sticker.rules);
+  $("#souvenir-list").innerHTML = gov(C.souvenir);
   $("#storage-specs").innerHTML = specs(C.storage);
+  $("#staff-total").textContent = C.staffTotal;
+  $("#staff-table").innerHTML = rows(C.staff, ["role", "count", "where", "duty"], true);
+  $("#staff-notes").innerHTML = list(C.staffNotes, li);
+  $("#crowd-table").innerHTML = rows(C.crowd, ["when", "action"], true);
 
   /* ======================================================================
-     05. 동선 · 운영
+     06. 제작물 · 07. 일정
      ====================================================================== */
-  $("#step-list").innerHTML = list(C.steps, function (s, i) {
-    return '<li class="step"><span class="step-num">STEP ' + (i + 1) + "</span>" +
-      "<h3>" + esc(s.title) + "</h3><p>" + esc(s.desc) + "</p></li>";
+  $("#supplies-table").innerHTML = list(C.supplies, function (r) {
+    var added = /추가/.test(r.note) ? ' class="row-added"' : "";
+    return "<tr" + added + '><th scope="row">' + esc(r.item) + "</th><td>" + esc(r.spec) + "</td><td>" + esc(r.qty) + "</td><td>" + esc(r.src) + "</td><td>" + esc(r.note) + "</td></tr>";
   });
-  $("#flow-rules").innerHTML = list(C.flowRules, li);
-  $("#booth-tips").innerHTML = list(C.boothTips, li);
-  function propRows(rows) {
-    return list(rows, function (r) { return '<tr><th scope="row">' + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>"; });
-  }
-  $("#props-ok").innerHTML = propRows(C.props.recommend);
-  $("#props-ng").innerHTML = propRows(C.props.avoid);
+  $("#supplies-notes").innerHTML = list([C.suppliesNote, C.space.notes[2]], li);
+  $("#schedule-list").innerHTML = list(C.schedule, function (s) {
+    return '<li><span class="tl-when">' + esc(s.when) + "</span><span>" + esc(s.what) + "</span></li>";
+  });
+  $("#checks-table").innerHTML = rows(C.checks, ["item", "who", "impact"], true);
+  $("#review-note-2").textContent = "※ " + C.reviewNote;
   $("#caution-list").innerHTML = list(C.cautions, li);
 
   /* ======================================================================
@@ -171,11 +204,12 @@
           '<span class="faq-q-text">' + esc(f.q) + "</span>" +
           icon("chevron", "faq-chev") + "</button></h3>" +
           '<div class="faq-a" id="' + f.id + '-a" role="region" aria-labelledby="' + f.id + '-btn" hidden>' +
+          '<p class="faq-oneliner"><em>포스터 한 줄 답</em>' + esc(f.poster) + "</p>" +
           '<p class="faq-lead">' + esc(f.lead) + "</p>" +
           '<ul class="chips">' + list(f.chips, li) + "</ul>" +
           '<ul class="faq-points">' + list(f.points, li) + "</ul>" +
           (f.note ? '<p class="faq-note"><strong>참고</strong> ' + esc(f.note) + "</p>" : "") +
-          '<p class="faq-summary">' + icon(f.icon) + "<span>" + esc(f.summary) + "</span></p>" +
+          '<p class="pharm-tip">' + icon("pharmacy") + "<span><strong>약사 TIP</strong> " + esc(f.tip) + "</span></p>" +
           "</div></article>";
       }) + "</div>";
   });
@@ -204,7 +238,7 @@
     C.faq.forEach(function (f) {
       var item = $('.faq-item[data-id="' + f.id + '"]', faqList);
       var partOk = currentPart === "all" || String(f.part) === currentPart;
-      var hay = normalize([f.q, f.lead, f.summary, f.note].concat(f.chips, f.points, f.tags).join(" "));
+      var hay = normalize([f.q, f.poster, f.tip, f.lead, f.summary, f.note].concat(f.chips, f.points, f.tags).join(" "));
       var visible = partOk && (!q || hay.indexOf(q) !== -1);
       item.hidden = !visible;
       if (visible) shown++;
@@ -331,7 +365,7 @@
   /* ======================================================================
      페이지 전환 (해시 라우터)
      ====================================================================== */
-  var baseTitle = "K-뷰티 부스 기획안";
+  var baseTitle = "K-뷰티 부스 운영 기획안";
   var currentPage = null;
 
   function parseHash() {
