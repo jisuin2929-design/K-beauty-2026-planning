@@ -1,6 +1,6 @@
-/* K-뷰티 부스 홈페이지 동작 스크립트
+/* K-뷰티 부스 기획안 동작 스크립트
    콘텐츠(문구)는 js/content.js 에서 수정하세요.
-   페이지 주소: #/home, #/about, #/faq, #/faq/q3, #/concern, #/booth, #/pharmacy, #/tips */
+   페이지 주소: #/home, #/poster, #/booklet, #/sticker, #/operation, #/faq, #/faq/q3, #/concern, #/pharmacy, #/tips */
 (function () {
   "use strict";
 
@@ -17,60 +17,145 @@
     return '<svg class="i ' + (cls || "") + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
   }
   function list(arr, fn) { return arr.map(fn).join(""); }
+  function li(t) { return "<li>" + esc(t) + "</li>"; }
+  function specs(pairs) {
+    return list(pairs, function (p) { return "<div><dt>" + esc(p[0]) + "</dt><dd>" + esc(p[1]) + "</dd></div>"; });
+  }
+  function faqById(id) { return C.faq.filter(function (f) { return f.id === id; })[0]; }
 
   var pageIds = C.pages.map(function (p) { return p.id; });
   function pageById(id) { return C.pages.filter(function (p) { return p.id === id; })[0]; }
 
   /* ======================================================================
-     메뉴 (상단 / 하단 / 홈 카드)
+     목차 메뉴
      ====================================================================== */
-  $("#top-nav").innerHTML = list(C.pages, function (p) {
-    return '<a href="#/' + p.id + '" data-nav="' + p.id + '">' + esc(p.label) + "</a>";
-  });
-  // 하단 고정바: 홈 + 앞의 4개 페이지
-  $("#bottom-nav").innerHTML = list(C.pages.slice(0, 5), function (p) {
-    return '<a href="#/' + p.id + '" data-nav="' + p.id + '">' + icon(p.icon) + "<span>" + esc(p.label) + "</span></a>";
+  $("#top-nav").innerHTML = list(C.pages, function (p, i) {
+    var sep = p.group === "appendix" && C.pages[i - 1].group !== "appendix" ? '<span class="nav-sep" aria-hidden="true"></span>' : "";
+    return sep + '<a href="#/' + p.id + '" data-nav="' + p.id + '"><em>' + esc(p.no) + "</em>" + esc(p.label) + "</a>";
   });
   $("#home-menu").innerHTML = list(C.pages.slice(1), function (p, i) {
     return '<li><a class="menu-card" href="#/' + p.id + '">' +
       '<span class="menu-icon m' + (i % 6) + '">' + icon(p.icon) + "</span>" +
-      '<span class="menu-text"><strong>' + esc(p.label) + "</strong><small>" + esc(p.desc) + "</small></span>" +
+      '<span class="menu-text"><small class="menu-no">' + esc(p.no) + "</small><strong>" + esc(p.label) + "</strong><small>" + esc(p.desc) + "</small></span>" +
       icon("arrow", "menu-arrow") + "</a></li>";
   });
 
   /* ======================================================================
-     K-뷰티 페이지
+     01. 개요 · 배치도
      ====================================================================== */
-  $("#keyword-list").innerHTML = list(C.keywords, function (k) {
-    return '<li class="keyword-card">' +
-      '<span class="keyword-icon">' + icon(k.icon) + "</span>" +
-      '<h3><span lang="en">' + esc(k.title) + "</span><small>" + esc(k.ko) + "</small></h3>" +
-      "<p>" + esc(k.desc) + "</p>" +
-      (k.more ? '<ul class="keyword-more">' + list(k.more, function (m) { return "<li>" + esc(m) + "</li>"; }) + "</ul>" : "") +
-      "</li>";
+  var O = C.overview;
+  $("#cover-msg").textContent = O.message;
+  $("#zone-list").innerHTML = list(C.boothZones, function (z) {
+    return '<li><a href="#/' + z.page + '"><span class="zone-code">' + esc(z.code) + '</span>' +
+      '<span class="zone-swatch z-' + esc(z.color) + '" aria-hidden="true"></span>' +
+      "<span><strong>" + esc(z.title) + "</strong><small>" + esc(z.desc) + "</small></span></a></li>";
   });
-
-  $("#reason-list").innerHTML = list(C.reasons, function (r, i) {
-    return '<li><span class="reason-num">' + (i + 1) + "</span><div><strong>" + esc(r.title) + "</strong><p>" + esc(r.desc) + "</p></div></li>";
+  $("#flow-steps").innerHTML = list(C.steps, function (s) { return "<li><strong>" + esc(s.title) + "</strong></li>"; });
+  $("#overview-facts").innerHTML = specs(O.facts);
+  $("#overview-purpose").innerHTML = list(O.purpose, li);
+  $("#key-message").textContent = O.message;
+  $("#sub-messages").innerHTML = list(O.subMessages, li);
+  $("#concept-list").innerHTML = list(O.concept, function (c) {
+    return '<li><strong lang="en">' + esc(c.title) + "</strong><span>" + esc(c.desc) + "</span></li>";
   });
+  $("#tone-list").innerHTML = list(O.tone, li);
 
-  $("#product-list").innerHTML = list(C.productGroups, function (g) {
-    return '<li><span class="product-icon">' + icon(g.icon) + "</span><strong>" + esc(g.title) + "</strong><small>" + esc(g.items) + "</small></li>";
-  });
-
-  $("#routine-list").innerHTML = list(C.routine, function (r, i) {
-    return '<li><span class="routine-num">' + (i + 1) + "</span>" +
-      '<span class="routine-icon">' + icon(r.icon) + "</span>" +
-      "<strong>" + esc(r.title) + "</strong><small>" + esc(r.desc) + "</small></li>";
-  });
-
-  $("#routine-times").innerHTML = list(C.routineTimes, function (t) {
-    return '<div class="routine-time"><strong>' + esc(t.title) + '</strong><ol class="flow">' +
-      list(t.steps, function (s) { return "<li>" + esc(s) + "</li>"; }) + "</ol></div>";
+  /* ======================================================================
+     02. 벽면 포스터
+     ====================================================================== */
+  $("#poster-principles").innerHTML = list(C.poster.principles, li);
+  $("#wall-list").innerHTML = list(C.poster.walls, function (w) {
+    var part = C.parts[w.part];
+    var items = C.faq.filter(function (f) { return f.part === w.part; });
+    return '<section class="wall-block">' +
+      '<h2 class="sec-title"><span>' + esc(w.code) + "</span>" + esc(w.wall) + " — " + esc(part.label) + "</h2>" +
+      '<p class="sec-lead">' + esc(w.note) + "</p>" +
+      '<div class="wall-mock" aria-label="' + esc(w.wall) + ' 정면 구성안">' +
+      '<div class="wall-zone-label" aria-hidden="true"><span>상단 · PART 제목</span><span>눈높이 · 질문 포스터 2×2</span><span>하단 · 비움</span></div>' +
+      '<div class="wall-inner">' +
+      '<div class="wall-band"><small>' + esc(part.label) + "</small><strong>" + esc(part.title) + "</strong></div>" +
+      '<ol class="wall-grid">' + list(items, function (f) {
+        return '<li class="poster-card">' +
+          '<span class="poster-no">' + f.id.toUpperCase() + "</span>" +
+          '<h3 class="poster-q">' + esc(f.q) + "</h3>" +
+          '<p class="poster-a">' + esc(f.summary) + "</p>" +
+          '<ul class="chips">' + list(f.chips.slice(0, 4), li) + "</ul>" +
+          '<p class="poster-visual"><strong>시각 요소</strong> ' + esc(C.visuals[f.id] || "") + "</p>" +
+          '<a class="poster-link" href="#/faq/' + f.id + '">원고 전문 보기 →</a>' +
+          "</li>";
+      }) + "</ol>" +
+      '<div class="wall-empty">하단 비움 — 바닥 가까운 곳에는 정보성 콘텐츠를 두지 않음</div>' +
+      "</div></div></section>";
   });
 
   /* ======================================================================
-     Q&A 페이지: 아코디언 + 검색/필터
+     03. A3 책자
+     ====================================================================== */
+  var B = C.booklet;
+  $("#booklet-specs").innerHTML = specs(B.specs);
+  $("#booklet-why").innerHTML = list(B.why, li);
+  $("#media-roles").innerHTML = list(C.mediaRoles, function (m) {
+    return '<tr><th scope="row">' + esc(m.name) + "</th><td>" + esc(m.where) + "</td><td>" + esc(m.time) + "</td><td>" + esc(m.role) + "</td></tr>";
+  });
+  $("#booklet-count").textContent = B.pages.length;
+  $("#booklet-pages").innerHTML = list(B.pages, function (p) {
+    var f = p.q && faqById(p.q);
+    var badge = /^\d+$/.test(p.no) ? "P." + p.no : p.no;
+    if (f) {
+      return '<li><details class="bk-page">' +
+        '<summary><span class="bk-no">' + esc(badge) + '</span><span class="bk-head"><strong>' + f.id.toUpperCase() + ". " + esc(f.q) + "</strong>" +
+        "<small>" + esc(C.parts[f.part].label) + " · 한 줄 답: " + esc(f.summary) + "</small></span>" + icon("chevron", "gloss-chev") + "</summary>" +
+        '<div class="bk-body">' +
+        '<p class="faq-lead">' + esc(f.lead) + "</p>" +
+        '<h4>본문 포인트</h4><ul class="faq-points">' + list(f.points, li) + "</ul>" +
+        (f.note ? '<p class="faq-note"><strong>참고</strong> ' + esc(f.note) + "</p>" : "") +
+        '<p class="poster-visual"><strong>시각 요소</strong> ' + esc(C.visuals[f.id] || "") + "</p>" +
+        "</div></details></li>";
+    }
+    return '<li><details class="bk-page">' +
+      '<summary><span class="bk-no bk-no-alt">' + esc(badge) + '</span><span class="bk-head"><strong>' + esc(p.title) + "</strong><small>" + esc(p.body[0]) + "</small></span>" + icon("chevron", "gloss-chev") + "</summary>" +
+      '<div class="bk-body"><ul class="faq-points">' + list(p.body, li) + "</ul></div></details></li>";
+  });
+
+  $$("[data-expand]").forEach(function (b) {
+    b.addEventListener("click", function () { $$("details", $(b.getAttribute("data-expand"))).forEach(function (d) { d.open = true; }); });
+  });
+  $$("[data-collapse]").forEach(function (b) {
+    b.addEventListener("click", function () { $$("details", $(b.getAttribute("data-collapse"))).forEach(function (d) { d.open = false; }); });
+  });
+
+  /* ======================================================================
+     04. 스티커 · 기념품 · 짐 보관
+     ====================================================================== */
+  var S = C.stickerPanel;
+  $("#panel-title").innerHTML = esc(S.title) + '<small>(대안: ' + esc(S.altTitle) + ")</small>";
+  $("#panel-rows").innerHTML = list(C.concerns, function (c, i) {
+    return '<li class="c-' + c.color + '"><span class="panel-label">' + esc(c.label) + "</span>" +
+      '<span class="panel-dots" aria-hidden="true">' + new Array(4 + (i % 2)).join('<i></i>') + "</span></li>";
+  });
+  $("#panel-howto").innerHTML = list(S.howto, li);
+  $("#panel-notes").innerHTML = list(S.notes, li);
+  $("#souvenir-specs").innerHTML = specs(C.souvenir);
+  $("#storage-specs").innerHTML = specs(C.storage);
+
+  /* ======================================================================
+     05. 동선 · 운영
+     ====================================================================== */
+  $("#step-list").innerHTML = list(C.steps, function (s, i) {
+    return '<li class="step"><span class="step-num">STEP ' + (i + 1) + "</span>" +
+      "<h3>" + esc(s.title) + "</h3><p>" + esc(s.desc) + "</p></li>";
+  });
+  $("#flow-rules").innerHTML = list(C.flowRules, li);
+  $("#booth-tips").innerHTML = list(C.boothTips, li);
+  function propRows(rows) {
+    return list(rows, function (r) { return '<tr><th scope="row">' + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>"; });
+  }
+  $("#props-ok").innerHTML = propRows(C.props.recommend);
+  $("#props-ng").innerHTML = propRows(C.props.avoid);
+  $("#caution-list").innerHTML = list(C.cautions, li);
+
+  /* ======================================================================
+     06. Q&A 원고: 아코디언 + 검색/필터
      ====================================================================== */
   var faqList = $("#faq-list");
   var currentPart = "all";
@@ -87,8 +172,8 @@
           icon("chevron", "faq-chev") + "</button></h3>" +
           '<div class="faq-a" id="' + f.id + '-a" role="region" aria-labelledby="' + f.id + '-btn" hidden>' +
           '<p class="faq-lead">' + esc(f.lead) + "</p>" +
-          '<ul class="chips">' + list(f.chips, function (c) { return "<li>" + esc(c) + "</li>"; }) + "</ul>" +
-          '<ul class="faq-points">' + list(f.points, function (pt) { return "<li>" + esc(pt) + "</li>"; }) + "</ul>" +
+          '<ul class="chips">' + list(f.chips, li) + "</ul>" +
+          '<ul class="faq-points">' + list(f.points, li) + "</ul>" +
           (f.note ? '<p class="faq-note"><strong>참고</strong> ' + esc(f.note) + "</p>" : "") +
           '<p class="faq-summary">' + icon(f.icon) + "<span>" + esc(f.summary) + "</span></p>" +
           "</div></article>";
@@ -100,7 +185,6 @@
     $(".faq-a", item).hidden = !open;
     item.classList.toggle("is-open", open);
   }
-
   faqList.addEventListener("click", function (e) {
     var btn = e.target.closest(".faq-q button");
     if (!btn) return;
@@ -114,7 +198,6 @@
   });
 
   function normalize(s) { return String(s).toLowerCase().replace(/\s+/g, ""); }
-
   function applyFaqFilter() {
     var q = normalize($("#faq-search").value);
     var shown = 0;
@@ -125,21 +208,17 @@
       var visible = partOk && (!q || hay.indexOf(q) !== -1);
       item.hidden = !visible;
       if (visible) shown++;
-      if (q) setOpen(item, visible); // 검색 중이면 결과를 펼쳐 보여줌
+      if (q) setOpen(item, visible);
     });
-    $$(".faq-part", faqList).forEach(function (g) {
-      g.hidden = !$(".faq-item:not([hidden])", g);
-    });
+    $$(".faq-part", faqList).forEach(function (g) { g.hidden = !$(".faq-item:not([hidden])", g); });
     $("#faq-empty").hidden = shown !== 0;
     $("#faq-status").textContent = q ? "검색 결과 " + shown + "개" : "";
   }
-
   var searchTimer;
   $("#faq-search").addEventListener("input", function () {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(applyFaqFilter, 150);
   });
-
   var tabs = $$(".tab");
   function selectTab(tab) {
     tabs.forEach(function (t) {
@@ -164,10 +243,9 @@
   });
 
   /* ======================================================================
-     피부고민 페이지 + 성분 사전
+     부록 A. 피부고민 + 성분 사전
      ====================================================================== */
   var ingNames = C.ingredients.map(function (g) { return g.name; });
-
   $("#glossary").innerHTML = list(C.ingredients, function (g, i) {
     return '<details class="gloss-item" id="ing-' + i + '">' +
       "<summary><strong>" + esc(g.name) + '</strong><small lang="en">' + esc(g.en) + "</small>" + icon("chevron", "gloss-chev") + "</summary>" +
@@ -175,29 +253,24 @@
       (g.caution ? '<p class="gloss-caution"><strong>주의</strong> ' + esc(g.caution) + "</p>" : "") +
       "</div></details>";
   });
-
   function openIngredient(name) {
     var idx = ingNames.indexOf(name);
     if (idx < 0) return;
     var el = document.getElementById("ing-" + idx);
     el.open = true;
-    el.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+    el.scrollIntoView({ block: "center" });
     $("summary", el).focus({ preventScroll: true });
   }
-
   var concernList = $("#concern-list");
   concernList.innerHTML = list(C.concerns, function (c) {
     return '<button type="button" class="concern-card c-' + c.color + '" data-id="' + c.id + '" aria-pressed="false">' +
       '<span class="concern-dot" aria-hidden="true"></span>' + esc(c.label) + "</button>";
   });
-
   concernList.addEventListener("click", function (e) {
     var btn = e.target.closest(".concern-card");
     if (!btn) return;
     var c = C.concerns.filter(function (x) { return x.id === btn.getAttribute("data-id"); })[0];
-    $$(".concern-card", concernList).forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b === btn));
-    });
+    $$(".concern-card", concernList).forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
     var box = $("#concern-result");
     box.className = "concern-result is-filled c-" + c.color;
     box.innerHTML =
@@ -205,42 +278,28 @@
       '<ul class="concern-keys">' + list(c.keywords, function (k) {
         return ingNames.indexOf(k) >= 0
           ? '<li><button type="button" class="key-link" data-ing="' + esc(k) + '">' + esc(k) + '<span class="sr-only"> 성분 설명 보기</span></button></li>'
-          : "<li>" + esc(k) + "</li>";
+          : li(k);
       }) + "</ul>" +
       '<p class="concern-tip">' + esc(c.tip) + "</p>" +
-      (c.care ? '<h3 class="concern-sub">생활 속 관리 팁</h3><ul class="care-list">' + list(c.care, function (t) { return "<li>" + esc(t) + "</li>"; }) + "</ul>" : "") +
+      (c.care ? '<h3 class="concern-sub">생활 속 관리 팁</h3><ul class="care-list">' + list(c.care, li) + "</ul>" : "") +
       (c.ask ? '<p class="concern-ask">' + icon("pharmacy") + "<span>" + esc(c.ask) + "</span></p>" : "");
   });
-
   $("#concern-result").addEventListener("click", function (e) {
     var b = e.target.closest(".key-link");
     if (b) openIngredient(b.getAttribute("data-ing"));
   });
 
   /* ======================================================================
-     부스안내 페이지
+     부록 B. 약사상담
      ====================================================================== */
-  $("#step-list").innerHTML = list(C.steps, function (s, i) {
-    return '<li class="step"><span class="step-num">STEP ' + (i + 1) + "</span>" +
-      "<h3>" + esc(s.title) + "</h3><p>" + esc(s.desc) + "</p></li>";
-  });
-  $("#zone-list").innerHTML = list(C.boothZones, function (z) {
-    return '<li><span class="zone-swatch z-' + esc(z.color) + '" aria-hidden="true"></span><div><strong>' + esc(z.title) + "</strong><p>" + esc(z.desc) + "</p></div></li>";
-  });
-  $("#booth-tips").innerHTML = list(C.boothTips, function (t) { return "<li>" + esc(t) + "</li>"; });
-
-  /* ======================================================================
-     약사상담 페이지
-     ====================================================================== */
-  $("#pharm-questions").innerHTML = list(C.pharmacistQuestions, function (q) { return "<li>" + esc(q) + "</li>"; });
+  $("#pharm-questions").innerHTML = list(C.pharmacistQuestions, li);
   $("#consult-prep").innerHTML = list(C.consultPrep, function (p) {
     return '<li><span class="prep-icon">' + icon(p.icon) + "</span><strong>" + esc(p.title) + "</strong><small>" + esc(p.desc) + "</small></li>";
   });
-  $("#functional-box").innerHTML = "<h2>" + esc(C.functional.title) + "</h2><ul>" +
-    list(C.functional.points, function (t) { return "<li>" + esc(t) + "</li>"; }) + "</ul>";
+  $("#functional-box").innerHTML = "<h2>" + esc(C.functional.title) + "</h2><ul>" + list(C.functional.points, li) + "</ul>";
 
   /* ======================================================================
-     O/X 페이지
+     부록 C. O/X
      ====================================================================== */
   $("#tip-list").innerHTML = list(C.tips, function (t, i) {
     var ans = t.a ? "O" : "X";
@@ -251,18 +310,20 @@
       '<span class="tip-ox tip-' + ans.toLowerCase() + '" aria-label="정답 ' + ans + '">' + ans + "</span>" +
       '<span class="tip-why">' + esc(t.why) + "</span></span></button></li>";
   });
-  function updateScore() {
-    var n = $$(".tip-card.is-open").length;
-    $("#quiz-score").textContent = n === C.tips.length ? "모두 확인했어요! 궁금한 점은 약사에게 물어보세요." : "정답 확인 " + n + " / " + C.tips.length;
-  }
-  $("#tip-list").addEventListener("click", function (e) {
-    var card = e.target.closest(".tip-card");
-    if (!card) return;
-    var open = card.getAttribute("aria-expanded") !== "true";
+  function setTip(card, open) {
     card.setAttribute("aria-expanded", String(open));
     $(".tip-a", card).hidden = !open;
     $(".tip-hint", card).hidden = open;
     card.classList.toggle("is-open", open);
+  }
+  function updateScore() {
+    var n = $$(".tip-card.is-open").length;
+    $("#quiz-score").textContent = "정답 확인 " + n + " / " + C.tips.length;
+  }
+  $("#tip-list").addEventListener("click", function (e) {
+    var card = e.target.closest(".tip-card");
+    if (!card) return;
+    setTip(card, card.getAttribute("aria-expanded") !== "true");
     updateScore();
   });
   updateScore();
@@ -270,15 +331,14 @@
   /* ======================================================================
      페이지 전환 (해시 라우터)
      ====================================================================== */
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var baseTitle = "2026 건강서울페스티벌 K-뷰티 부스";
+  var baseTitle = "K-뷰티 부스 기획안";
   var currentPage = null;
 
   function parseHash() {
     var h = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
     if (!h) return { page: "home" };
     var parts = h.split("/");
-    if (/^q[1-8]$/.test(parts[0])) return { page: "faq", sub: parts[0] }; // 예전 주소(#q3) 호환
+    if (/^q[1-8]$/.test(parts[0])) return { page: "faq", sub: parts[0] };
     if (pageIds.indexOf(parts[0]) >= 0) return { page: parts[0], sub: parts[1] };
     return null; // #main 등 페이지가 아닌 해시는 무시
   }
@@ -288,8 +348,8 @@
     var prev = C.pages[i - 1];
     var next = C.pages[i + 1];
     $("#pager").innerHTML =
-      (prev ? '<a class="pager-link prev" href="#/' + prev.id + '"><small>이전</small><strong>' + esc(prev.label) + "</strong></a>" : "<span></span>") +
-      (next ? '<a class="pager-link next" href="#/' + next.id + '"><small>다음</small><strong>' + esc(next.label) + "</strong></a>" : '<a class="pager-link next" href="#/home"><small>처음으로</small><strong>홈</strong></a>');
+      (prev ? '<a class="pager-link prev" href="#/' + prev.id + '"><small>이전 · ' + esc(prev.no) + "</small><strong>" + esc(prev.label) + "</strong></a>" : "<span></span>") +
+      (next ? '<a class="pager-link next" href="#/' + next.id + '"><small>다음 · ' + esc(next.no) + "</small><strong>" + esc(next.label) + "</strong></a>" : '<a class="pager-link next" href="#/home"><small>처음으로</small><strong>개요·배치도</strong></a>');
   }
 
   function showPage(route, fromNav) {
@@ -304,7 +364,7 @@
     if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "center" });
 
     var p = pageById(id);
-    document.title = id === "home" ? "K-BEAUTY가 뭐예요? | " + baseTitle : p.title + " | " + baseTitle;
+    document.title = p.no + " " + p.title + " | " + baseTitle;
     renderPager(id);
     currentPage = id;
 
@@ -332,65 +392,22 @@
   showPage(parseHash() || { page: "home" }, false);
 
   /* ======================================================================
-     공유 / QR (현재 보고 있는 페이지 주소로 생성)
+     전체 인쇄: 모든 페이지·접힌 내용을 펼쳐서 인쇄
      ====================================================================== */
-  var dialog = $("#share-dialog");
-  var qrLib = null;
-
-  function shareUrl() {
-    return location.href.split("#")[0] + "#/" + (currentPage || "home");
-  }
-
-  function drawQr(url) {
-    var qr = window.qrcode(0, "M");
-    qr.addData(url);
-    qr.make();
-    $("#qr-box").innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: true });
-  }
-  function qrFail() {
-    qrLib = null;
-    $("#qr-box").innerHTML = '<span class="qr-loading">QR 코드를 불러오지 못했어요. 링크 복사를 이용해 주세요.</span>';
-  }
-  function showQr(url) {
-    if (window.qrcode) { try { drawQr(url); } catch (err) { qrFail(); } return; }
-    $("#qr-box").innerHTML = '<span class="qr-loading">QR 코드 생성 중…</span>';
-    if (qrLib) return;
-    qrLib = document.createElement("script");
-    qrLib.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";
-    qrLib.onload = function () { try { drawQr(shareUrl()); } catch (err) { qrFail(); } };
-    qrLib.onerror = qrFail;
-    document.head.appendChild(qrLib);
-  }
-
-  if (navigator.share) $("#btn-native-share").hidden = false;
-  $("#btn-native-share").addEventListener("click", function () {
-    navigator.share({ title: document.title, url: shareUrl() }).catch(function () {});
+  var printState = null;
+  window.addEventListener("beforeprint", function () {
+    printState = {
+      details: $$("details").filter(function (d) { return !d.open; }),
+      faq: $$(".faq-item").filter(function (it) { return !it.classList.contains("is-open"); })
+    };
+    printState.details.forEach(function (d) { d.open = true; });
+    printState.faq.forEach(function (it) { setOpen(it, true); });
   });
-  $("#btn-copy").addEventListener("click", function () {
-    var status = $("#share-status");
-    var url = shareUrl();
-    var done = function () { status.textContent = "링크를 복사했어요."; $("#btn-copy").textContent = "복사 완료!"; };
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(url).then(done, function () { status.textContent = "복사에 실패했어요. 주소를 직접 선택해 주세요."; });
-    } else {
-      var r = document.createRange();
-      r.selectNodeContents($("#share-url"));
-      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-      try { document.execCommand("copy"); done(); } catch (err) { status.textContent = "주소를 길게 눌러 복사해 주세요."; }
-    }
+  window.addEventListener("afterprint", function () {
+    if (!printState) return;
+    printState.details.forEach(function (d) { d.open = false; });
+    printState.faq.forEach(function (it) { setOpen(it, false); });
+    printState = null;
   });
-
-  $$("[data-share]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var url = shareUrl();
-      $("#share-url").textContent = url;
-      $("#btn-copy").textContent = "링크 복사";
-      if (dialog.showModal) dialog.showModal();
-      else if (navigator.share) navigator.share({ title: document.title, url: url }).catch(function () {});
-      showQr(url);
-    });
-  });
-  dialog.addEventListener("click", function (e) {
-    if (e.target === dialog) dialog.close();
-  });
+  $("#btn-print").addEventListener("click", function () { window.print(); });
 })();
